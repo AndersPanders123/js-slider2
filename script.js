@@ -1,38 +1,37 @@
-const images = document.querySelectorAll('.slider img');
-const imag = document.getElementsByClassName("slider")
-let currentImageIndex = 1;
-const imgList = [' <img src="pic/divios.png">','<img src="pic/karate.png">','<img src="pic/nigga.png">']
+const images = document.querySelectorAll(".slider img");
+const imag = document.getElementsByClassName("slider");
+let currentImageIndex = 0; //bilde nummer
+const imgList = ["pic/divios.png", "pic/karate.png", "pic/nigga.png"]; //bildene
+
+window.onload = handleImageChange(1); //når vinduet laster bruk denne funksjonen
 function startImageSlider() {
   setInterval(() => {
-    console.log(imag[0].innerHTML)
-    imag[0].innerHTML = imgList[currentImageIndex]
-    images[currentImageIndex].classList.remove('active');
-    currentImageIndex = (currentImageIndex + 1) % images.length;
-    images[currentImageIndex].classList.add('active');
+    handleImageChange(currentImageIndex + 1);
   }, 4000);
 }
 
-startImageSlider();
+startImageSlider(); //bare kjør dette
 
-function startbackSlide() {
-  console.log(currentImageIndex)
-  currentImageIndex = currentImageIndex - 1
-  imag[0].innerHTML = imgList[currentImageIndex]
+function handleImageChange() {
+  document.querySelectorAll("img").forEach((element) => {
+    //før vi bytter bilde fjerner vi alle bildene fra før
+    element.remove();
+  });
+
+  currentImageIndex = (currentImageIndex + 1) % imgList.length; //endre bildet index
+
+  const item = document.createElement("img"); //lage nytt bilde element
+  item.src = imgList[currentImageIndex]; //endre kilden til bilde
+
+  document.getElementById("slider").appendChild(item); //legge til bilde
 }
-
-function startnextSlide(){
-  console.log(currentImageIndex , imgList.length)
-  currentImageIndex = currentImageIndex + 1
-  imag[0].innerHTML = imgList[currentImageIndex]
-}
-
 
 const nextBtn = document.getElementById("nextBtn");
-    nextBtn.addEventListener("click", function(e) {
-      nextBtn.addEventListener('click', startnextSlide);
-    });
+nextBtn.addEventListener("click", function (e) {
+  nextBtn.addEventListener("click", handleImageChange(currentImageIndex + 1));
+});
 
 const backBtn = document.getElementById("backBtn");
-    backBtn.addEventListener("click", function(e) {
-      backBtn.addEventListener('click', startbackSlide);
-    });
+backBtn.addEventListener("click", function (e) {
+  backBtn.addEventListener("click", handleImageChange(currentImageIndex - 1));
+});
