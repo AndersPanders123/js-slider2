@@ -16,9 +16,16 @@
     opacity: 1;
   }
   
-
   #knapp {
   display: flex;
   position: relative;
   left: 40%;
+  }
+
+  #nextBtn{
+    background-color: crimson;
+  }
+
+  body{
+    background-color: coral;
   }
